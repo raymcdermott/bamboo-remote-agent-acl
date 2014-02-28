@@ -9,7 +9,7 @@
 
     <organization>
         <name>mondraymond</name>
-        <url>https://bitbucket.org/mondraymond</url>
+        <url>https://github.com/raymcdermott/bamboo-remote-agent-acl</url>
     </organization>
 
     <name>remote-agent-acl</name>
@@ -45,9 +45,9 @@
     </dependencies>
 
     <scm>
-        <connection>scm:svn:https://cde.toyota-europe.com/repos/tme/cde/remote-agent-acl/trunk/</connection>
-        <developerConnection>scm:svn:https://cde.toyota-europe.com/repos/tme/cde/remote-agent-acl/trunk/</developerConnection>
-        <url>http://cde.toyota-europe.com/fisheye</url>
+        <connection>scm:git:git://github.com/raymcdermott/bamboo-remote-agent-acl</connection>
+        <developerConnection>scm:git:git://github.com/raymcdermott/bamboo-remote-agent-acl</developerConnection>
+        <url>https://github.com/raymcdermott/bamboo-remote-agent-acl</url>
     </scm>
 
     <build>
@@ -146,22 +146,6 @@
             </build>
         </profile>
     </profiles>
-
-    <distributionManagement>
-
-         <repository>
-             <id>deployment.release</id>
-             <name>TME Internal Maven Repository</name>
-             <url>${artifact.release.url}</url>
-         </repository>
-
-         <snapshotRepository>
-             <id>deployment.snapshots</id>
-             <name>TME Snapshot Maven Repository</name>
-             <url>${artifact.snapshot.url}</url>
-         </snapshotRepository>
-
-     </distributionManagement>
 
      <repositories>
          <repository>
