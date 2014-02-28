@@ -19,20 +19,20 @@ This plugin imposes restrictions on the use of remote agents. The admin can assi
 ##Installation
 Obtain the latest JAR file from Github (latest = remote-agent-acl-1.1-SNAPSHOT.jar)
 
-[ FYI group: mondraymond.plugins.bamboo, artefact: remote-agent-acl ]
+[ Maven group: mondraymond.plugins.bamboo, artefact: remote-agent-acl ]
 
 ##Configuration
-The Bamboo system admin must define two server system properties as shown in the Atlassian docs
+The Bamboo system admin must define two server system properties as shown in the [Atlassian docs](https://confluence.atlassian.com/display/BAMBOO/Configuring+system+properties)
 
 #AGENT_NAME_MATCH
 
 Only the agents matching this property are evaluated for correct permissions. Examples
 
-dev-linux-001, uat-linux-002, prod-linux-003 (standard agent names)
+AGENT_NAME_MATCH='dev-linux-001, uat-linux-002, prod-linux-003' \#standard agent names
 
-prod-.\* (agent names expanded with regular expression)
+AGENT_NAME_MATCH='prod-.\*' \#agent names expanded with regular expression
 
-.\* (regular expression matching any agent)
+AGENT_NAME_MATCH='.\*' \#regular expression matching any agent
 
 We have something like 'lx.\*p0.\*,sunesbp0.\*,acmehof.\*p0.\*' to limit access to production agents
 
