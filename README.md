@@ -1,7 +1,9 @@
 ##Problem
 Atlassian does not provide authorisation control for access to build agents. This means that a user with build rights on a plan can deploy any project to any environment.
 
-See the bug opened February *2009* https://jira.atlassian.com/browse/BAM-3491
+See the bug opened *February 2009* https://jira.atlassian.com/browse/BAM-3491
+
+Yes you read that right. As of today, 5 years later, it's still open and I have finally caved and published.
 
 Atlassian are the owners of this problem but we need an interim solution.
 
@@ -15,7 +17,7 @@ Solution
 This plugin imposes restrictions on the use of remote agents. The admin can assign groups to one or more agents.
 
 ##Installation
-Obtain the latest JAR file from Github (latest =    remote-agent-acl-1.1-SNAPSHOT.jar)
+Obtain the latest JAR file from Github (latest = remote-agent-acl-1.1-SNAPSHOT.jar)
 
 [ FYI group: mondraymond.plugins.bamboo, artefact: remote-agent-acl ]
 
@@ -27,7 +29,9 @@ The Bamboo system admin must define two server system properties as shown in the
 Only the agents matching this property are evaluated for correct permissions. Examples
 
 dev-linux-001, uat-linux-002, prod-linux-003 (standard agent names)
+
 prod-.\* (agent names expanded with regular expression)
+
 .\* (regular expression matching any agent)
 
 We have something like 'lx.\*p0.\*,sunesbp0.\*,acmehof.\*p0.\*' to limit access to production agents
@@ -39,7 +43,9 @@ The property is matched as comma delimited expressions. Each token supports regu
 The given groups are matched and checked with the current user
 
 developers, operations (standard group names)
+
 admin.\* (group name expanded with regular expression)
+
 .\* (regular expression matching any group)
 
 For example you might have 'acme-operations' to limit production deployment to operations
