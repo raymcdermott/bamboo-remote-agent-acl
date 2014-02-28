@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>mondraymond.plugins.bamboo</groupId>
+    <artifactId>remote-agent-acl</artifactId>
+    <version>1.1-SNAPSHOT</version>
+
+    <organization>
+        <name>mondraymond</name>
+        <url>https://bitbucket.org/mondraymond</url>
+    </organization>
+
+    <name>remote-agent-acl</name>
+    <description>ACL for Atlassian Bamboo remote agents</description>
+    <packaging>atlassian-plugin</packaging>
+
+    <properties>
+        <bamboo.version>4.4.0</bamboo.version>
+        <bamboo.data.version>3.2.2</bamboo.data.version>
+        <amps.version>4.1.6</amps.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.bamboo</groupId>
+            <artifactId>atlassian-bamboo-web</artifactId>
+            <version>${bamboo.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <scm>
+        <connection>scm:svn:https://cde.toyota-europe.com/repos/tme/cde/remote-agent-acl/trunk/</connection>
+        <developerConnection>scm:svn:https://cde.toyota-europe.com/repos/tme/cde/remote-agent-acl/trunk/</developerConnection>
+        <url>http://cde.toyota-europe.com/fisheye</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-bamboo-plugin</artifactId>
+                <version>${amps.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <productVersion>${bamboo.version}</productVersion>
+                    <productDataVersion>${bamboo.data.version}</productDataVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>1.2</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-repository-setup</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>artifact.release.url</property>
+                                            <message>You must define artifact.release.url - see the TME Wiki for Maven
+                                                setup guidelines
+                                            </message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>artifact.snapshot.url</property>
+                                            <message>You must define artifact.snapshot.url - see the TME Wiki for Maven
+                                                setup guidelines
+                                            </message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>release.username</property>
+                                            <message>You must define release.username</message>
+                                        </requireProperty>
+                                        <requireProperty>
+                                            <property>release.password</property>
+                                            <message>You must define release.password</message>
+                                        </requireProperty>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.4.1</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <username>${release.username}</username>
+                            <password>${release.password}</password>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <!--To support the release plugin-->
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>2.7</version>
+                    </plugin>
+                    <plugin>
+                        <!--To support the release plugin-->
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                    </plugin>
+                    <plugin>
+                        <!--To support the release plugin-->
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+
+         <repository>
+             <id>deployment.release</id>
+             <name>TME Internal Maven Repository</name>
+             <url>${artifact.release.url}</url>
+         </repository>
+
+         <snapshotRepository>
+             <id>deployment.snapshots</id>
+             <name>TME Snapshot Maven Repository</name>
+             <url>${artifact.snapshot.url}</url>
+         </snapshotRepository>
+
+     </distributionManagement>
+
+     <repositories>
+         <repository>
+             <id>central</id>
+             <url>http://central</url>
+             <releases>
+                 <enabled>true</enabled>
+             </releases>
+             <snapshots>
+                 <enabled>true</enabled>
+                 <updatePolicy>always</updatePolicy>
+             </snapshots>
+         </repository>
+     </repositories>
+     <pluginRepositories>
+         <pluginRepository>
+             <id>central</id>
+             <url>http://central</url>
+             <releases>
+                 <enabled>true</enabled>
+             </releases>
+             <snapshots>
+                 <enabled>true</enabled>
+                 <updatePolicy>always</updatePolicy>
+             </snapshots>
+         </pluginRepository>
+     </pluginRepositories>
+
+
+
+</project>
